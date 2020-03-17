@@ -1,5 +1,5 @@
-import "./ButtonMovie.css";
 import React, { Component } from "react";
+import "./ButtonMovie.css";
 
 class ButtonMovie extends Component {
   render() {
@@ -9,26 +9,14 @@ class ButtonMovie extends Component {
       <div>
         <div className="row btns-movie-found">
           <div className="col-6">
-            {!isAddWatchlist ? (
-              <div className="add-to-watchlist" onClick={addWatchlist}>
-                Ajouter
-              </div>
-            ) : (
-              <div className="add-to-watchlist" onClick={addWatchlist}>
-                Supprimer
-              </div>
-            )}
+            <div className="add-to-watchlist" onClick={addWatchlist}>
+              {!isAddWatchlist ? "Ajouter" : "Supprimer"}
+            </div>
           </div>
           <div className="col-6">
-            {!isWatch ? (
-              <div className="already-watch" onClick={alreadySeen}>
-                Deja Vu
-              </div>
-            ) : (
-              <div className="already-watch" onClick={alreadySeen}>
-                pas encore
-              </div>
-            )}
+            <div className="already-watch" onClick={alreadySeen}>
+              {!isWatch ? "Deja vu " : "Pas Vu"}
+            </div>
           </div>
         </div>
       </div>
