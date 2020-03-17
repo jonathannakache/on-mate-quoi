@@ -1,0 +1,33 @@
+.posterList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.posterList--title {
+  font-size: 2.5rem;
+  color: #1c1c1c;
+  font-weight: bold;
+  margin-top: 3rem;
+  text-align: center;
+  /* border-bottom: 3px solid #901818;
+  width: 25%; */
+}
+.posterList--grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2vw;
+}
+
+.ui.grid > .row > .column {
+  margin-top: 4rem !important;
+}
+
+.ui.card>.content>.header, .ui.cards>.card>.content>.header {
+  display: block;
+  margin: '';
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  color: rgba(0,0,0,.85);
+  text-align: center;
+}

@@ -1,0 +1,12 @@
+.colorr {
+  color: #b64fcd !important;
+  font-weight: bold !important;
+}
+.bgColor {
+  /* background-color: #C1292E !important; */
+  background: #b64fcd !important;
+  background: -webkit-linear-gradient(to right, #b64fcd, #3c19a8) !important;
+  background: linear-gradient(to right, #b64fcd, #3c19a8) !important;
+
+  color: white !important;
+}
