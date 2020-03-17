@@ -2,17 +2,14 @@ import "./ButtonMovie.css";
 import React, { Component } from "react";
 
 class ButtonMovie extends Component {
-    
-
-
   render() {
-    const { alreadySeen, movies,wishList, id, addWatchlist } = this.props;
+    const { alreadySeen, addWatchlist, isAddWatchlist, isWatch } = this.props;
 
     return (
       <div>
         <div className="row btns-movie-found">
           <div className="col-6">
-            {!wishList.includes(id) ? (
+            {!isAddWatchlist ? (
               <div className="add-to-watchlist" onClick={addWatchlist}>
                 Ajouter
               </div>
@@ -23,7 +20,7 @@ class ButtonMovie extends Component {
             )}
           </div>
           <div className="col-6">
-            {!movies.includes(id) ? (
+            {!isWatch ? (
               <div className="already-watch" onClick={alreadySeen}>
                 Deja Vu
               </div>
@@ -38,33 +35,5 @@ class ButtonMovie extends Component {
     );
   }
 }
-
-// export default ButtonMovie;
-// const ButtonMovie = ({ id, alreadySeen, movies }) => {
-//   console.log("alreadySeen", alreadySeen);
-
-//   return (
-//     <div>
-//       <div className="row btns-movie-found">
-//         <div className="col-6 ">
-//           <a href="#">
-//             <div className="add-to-watchlist">Ajouter</div>
-//           </a>
-//         </div>
-//         <div className="col-6">
-//           {!movies.movieSeen ? (
-//             <div className="already-watch" onClick={alreadySeen}>
-//               Deja Vu
-//             </div>
-//           ) : (
-//             <div className="already-watch" onClick={alreadySeen}>
-//               Pas Vu
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
 
 export default ButtonMovie;

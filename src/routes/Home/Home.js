@@ -1,49 +1,43 @@
 import React, { Component } from "react";
+import axios from "axios";
 import { HeaderImg, SearchBar, PosterList, Footer } from "../../components";
 import "./Home.css";
 
 class Home extends Component {
   state = {
+    movies: [
+      {
+        id: "",
+        isWatch: false,
+        isAddWatchlist: false
+      }
+    ],
     movie: "",
-    isLoad: false,
-    data: {
+    resultMovies: {
       results: []
-    },
-    movies: [],
-    wishList: []
-  };
-
-  alreadySeen = movie => {
-    if (this.state.movies.some(item => item.name === movie)) {
-      this.setState({
-        movies: this.state.movies.filter(i => i.name !== movie)
-      });
-    } else {
-      this.setState({
-        movies: [...this.state.movies, { name: movie, movieSeen: true }]
-      });
     }
   };
 
-  addWatchlist = movie => {
-    if (this.state.wishList.some(item => item.name === movie)) {
-      this.setState({
-        wishList: this.state.wishList.filter(i => i.name !== movie)
-      });
-    } else {
-      this.setState({
-        wishList: [...this.state.wishList, { name: movie, movieSeen: true }]
-      });
-    }
+  buttonState = btnState => {
+    const filteredItem = this.state.movies.filter(
+      item => item.id !== btnState.id
+    );
+    this.setState({
+      movie: this.state.id,
+      data: this.state.data,
+      movies: [...filteredItem, btnState]
+    });
   };
 
   searchMovie = async movie => {
     this.setState({ movie });
-    const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&query=${movie}&page=1`
-    );
-    const json = await response.json();
-    this.setState({ data: json });
+    await axios
+      .get(
+        `https://api.themoviedb.org/3/search/movie?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&query=${movie}&page=1`
+      )
+      .then(res => {
+        this.setState({ resultMovies: res.data });
+      });
   };
 
   render() {
@@ -52,12 +46,11 @@ class Home extends Component {
         <HeaderImg />
         <SearchBar searchMovie={this.searchMovie} />
         <PosterList
-          data={this.state.data}
-          isLoad={this.state.isLoad}
+          resultMovies={this.state.resultMovies}
           alreadySeen={this.alreadySeen}
-          addWatchlist={this.addWatchlist}
           movies={this.state.movies}
           wishList={this.state.wishList}
+          buttonState={this.buttonState}
         />
 
         <Footer />
