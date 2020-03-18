@@ -36,11 +36,6 @@ class Poster extends Component {
       id: movie
     };
     this.props.buttonState(btnState);
-    console.log('ssss');
-    
-    // setTimeout(() => {
-    //   this.props.buttonState(this.state);
-    // }, 1000);
   };
 
   render() {
@@ -48,7 +43,7 @@ class Poster extends Component {
     const { isWatch, isAddWatchlist } = this.state;
     return (
       <>
-        <Link to={`/movie/${id}`}>
+        <Link to={`/movie/${id}`} >
           <Card>
             <Image
               src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2${image}`}

@@ -1,61 +1,129 @@
 import React, { Component } from "react";
 import "./MovieId.css";
+import axios from "axios";
 import { Footer } from "../../components";
 
 class MovieId extends Component {
-  a = () => {
+  state = {
+    id: "",
+    getVideo: {},
+    resultMovies: {},
+    getCredit: {},
+    load: false
+  };
+
+  async componentDidMount() {
+    const str = window.location.pathname;
+    const movieID = str.substr(7);
+
+    await axios
+      .all([
+        await axios.get(
+          `https://api.themoviedb.org/3/movie/${movieID}/videos?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR`
+        ),
+        await axios.get(
+          `https://api.themoviedb.org/3/movie/${movieID}/credits?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR`
+        ),
+        await axios.get(
+          `https://api.themoviedb.org/3/movie/${movieID}?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR`
+        )
+      ])
+      .then(
+        axios.spread((getVideo, getCredit, getDetail) => {
+          this.setState({
+            getVideo: getVideo.data,
+            resultMovies: getDetail.data,
+            getCredit: getCredit.data,
+            id: movieID,
+            load: true
+          });
+        })
+      );
+  }
+
+  renderMovie = () => {
+    function time_convert(num) {
+      var hours = Math.floor(num / 60);
+      var minutes = num % 60;
+      return hours + " h " + minutes + " minutes";
+    }
+    const { resultMovies, getVideo, getCredit } = this.state;
+    const director = getCredit.crew.filter(
+      director => director.job === "Director"
+    )[0].name;
+
     return (
       <div className=" container">
-        <div class="search-movie movie-id row">
-          <div class="col-3">
+        <div className="search-movie movie-id row">
+          <div className="col-3">
             <figure>
               <img
-                src="http://lorempixel.com/210/360/"
+                draggable="false"
+                src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2${resultMovies.poster_path}`}
                 className="movie-id-img"
                 alt=""
               />
             </figure>
           </div>
-          <div class="col-9">
-            <h3>Titre du fim</h3>
-            <p>Realisateur</p>
-            <p>Duree</p>
-            <p>Acteurs</p>
-            <p>Categories</p>
-            <p>
-              SYNOPSIS : Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Eligendi, minima. Quia animi fugit eveniet optio dolorum
-              temporibus quos possimus, neque dolorem cum quaerat numquam
-              pariatur cupiditate distinctio architecto recusandae quod.
+          <div className="col-9">
+            <h3>{resultMovies.title}</h3>
+            <p>Realisateur :</p>
+            <p className="result">{director}</p>
+            <p>Durée</p>
+            <p className="result">{time_convert(resultMovies.runtime)}</p>
+            <p>Acteurs :</p>
+            <p className="categories">
+              {getCredit.cast
+                .map(acteur => (
+                  <span className="categories">{acteur.name}</span>
+                ))
+                .slice(0, 7)}
             </p>
+            <p>
+              {resultMovies.genres.length > 1 ? "Categories :" : "Categorie :"}
+            </p>
+            <p className="result">
+              {resultMovies.genres.map(element => (
+                <span className="categories">{element.name}</span>
+              ))}
+            </p>
+            <p>Synopsis :</p>
+            <p className="result">{resultMovies.overview}</p>
           </div>
         </div>
-        <div class="row">
-          <div class="col-3"></div>
-          <div class="add-to-watchlist col-6">
+        <div className="row">
+          <div className="col-3"></div>
+          <div className="add-to-watchlist col-6">
             <a href="#">Ajouter a ma Watchlist</a>
           </div>
-          <div class="col-3"></div>
+          <div className="col-3"></div>
         </div>
+
+        {getVideo.results.length > 0 ? (
+          <div className="iframe-container">
+            <iframe
+              width="560"
+              height="315"
+              src={`https://www.youtube.com/embed/${getVideo.results[0].key}`}
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     );
   };
   render() {
+    const { load } = this.state;
+
     return (
       <div className="bg">
-        {this.a()}
-
+        {load ? this.renderMovie() : `erreur`}
         <Footer />
       </div>
-
-      // <div className="container">
-      //     <h3 className="text-center mb-5">COMMENTAIRES</h3>
-      //     <form action="POST" className="row d-flex justify-content-around">
-      //             <div class="col-3">Poster</div>
-      //             <textarea className="col-7" name="avis" id="avis" cols="30" rows="4" placeholder="Donne ton avis sur ce film"></textarea>
-      //             <input className="col-3" type="submit" name="avis" id="avis" placeholder="Poster" />
-      //         </form>
-      // </div>
     );
   }
 }
