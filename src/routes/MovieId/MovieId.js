@@ -82,7 +82,7 @@ class MovieId extends Component {
             <p>
               {resultMovies.genres.length > 1 ? "Categories :" : "Categorie :"}
             </p>
-            <p className="result">
+            <p>
               {resultMovies.genres.map(element => (
                 <span className="categories">{element.name}</span>
               ))}
