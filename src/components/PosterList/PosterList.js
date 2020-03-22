@@ -1,19 +1,16 @@
 import React, { Component } from "react";
-// import Poster from "../Poster/Poster";
 import { Grid, Container } from "semantic-ui-react";
-import Poster from "../Poster/Poster";
+import { Poster, Footer, Header } from "../index";
 import "./PosterList.css";
 
 class PosterList extends Component {
-  render() {
+  renderMovies = () => {
     const { resultMovies, isAddWatchlist, buttonState } = this.props;
 
-    const PosterArray = resultMovies.results.map(movie =>  {
+    const renderMovies = resultMovies.results.map(movie => {
       if (movie.poster_path && movie.overview !== "") {
         return (
-          <Grid.Column
-              key={movie.id}
-            >
+          <Grid.Column key={movie.id}>
             <Poster
               title={movie.title}
               releaseDate={movie.release_date}
@@ -21,7 +18,6 @@ class PosterList extends Component {
               note={movie.vote_average}
               langueOriginal={movie.original_language}
               image={movie.poster_path}
-              synopsis={movie.overview}
               isAddWatchlist={isAddWatchlist}
               buttonState={buttonState}
             />
@@ -29,24 +25,31 @@ class PosterList extends Component {
         );
       }
     });
-    let loadResults;
+    return renderMovies;
+  };
 
-    if (resultMovies.total_results === 0) {
-      loadResults = <h3>Aucun films trouve</h3>;
-    } else if (resultMovies.page) {
-      loadResults = (
-        <div>
-          <h3>NOUVEAUX FILMS</h3>
-          <Container>
-            <Grid columns={4} stackable>
-              <Grid.Row>{PosterArray}</Grid.Row>
-            </Grid>
-          </Container>
-        </div>
-      );
-    }
-
-    return <div>{loadResults} </div>;
+  render() {
+    return (
+      <div className="posterList">
+        {this.props.resultMovies.results.length === 0 ? (
+          <>
+            <Header badge={5} />
+            <h1>pas de films</h1>
+            <Footer />
+          </>
+        ) : (
+          <>
+            <Header badge={5} />
+            <Container>
+              <Grid columns={4} stackable>
+                <Grid.Row>{this.renderMovies()}</Grid.Row>
+              </Grid>
+            </Container>
+            <Footer />
+          </>
+        )}
+      </div>
+    );
   }
 }
 

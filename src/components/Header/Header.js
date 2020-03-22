@@ -15,7 +15,7 @@ class Header extends Component {
         <FontAwesome className="header--movie" name="film" size="5x" />
         <NavLink to="/">ON MATE QUOI ? </NavLink>
         <NavLink to="/login">Se connecter</NavLink>
-        <NavLink to="/login">trouver un film</NavLink>
+        <NavLink to="/search">trouver un film</NavLink>
         <FontAwesome className="header--heart" name="heart" size="5x" />
 
         <div className="header--badge">{this.props.badge}</div>

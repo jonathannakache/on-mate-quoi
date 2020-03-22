@@ -1,10 +1,13 @@
 import React from "react";
 import "./NotFound.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Header } from "../../components/";
 
 const NotFound = () => {
   return (
     <body className="bg-purple">
+      <Header badge={5} />
+
       <div className="stars">
         <div className="central-body">
           <img className="image-404" src={require("../../img/404-error.png")} />

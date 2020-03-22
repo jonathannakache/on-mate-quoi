@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./MovieId.css";
 import axios from "axios";
-import { Footer } from "../../components";
+import { Footer, Header } from "../../components";
 
 class MovieId extends Component {
   state = {
@@ -120,9 +120,12 @@ class MovieId extends Component {
     const { load } = this.state;
 
     return (
-      <div className="bg">
-        {load ? this.renderMovie() : `erreur`}
-        <Footer />
+      <div className="app">
+        <Header badge={5} />
+        <div className="bg">
+          {load ? this.renderMovie() : `erreur`}
+          <Footer />
+        </div>
       </div>
     );
   }

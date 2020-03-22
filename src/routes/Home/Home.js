@@ -29,22 +29,11 @@ class Home extends Component {
     });
   };
 
-  searchMovie = async movie => {
-    this.setState({ movie });
-    await axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&query=${movie}&page=1`
-      )
-      .then(res => {
-        this.setState({ resultMovies: res.data });
-      });
-  };
-
   render() {
     return (
       <div className="home">
         <HeaderImg />
-        <SearchBar searchMovie={this.searchMovie} />
+        <SearchBar searchMovie={this.props.searchMovie} />
         <PosterList
           resultMovies={this.state.resultMovies}
           alreadySeen={this.alreadySeen}
