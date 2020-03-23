@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { Header, HeaderImg, SearchBar, PosterList, Footer } from "./components";
-import { Home, LoginForm, NotFound, MovieId } from "./routes";
+import { HeaderImg, SearchBar, PosterList } from "./components";
+import { LoginForm, NotFound, MovieId } from "./routes";
 import "./App.css";
-import axios from "axios";
-
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SearchMovie from "./routes/SearchMovie/SearchMovie";
 
 class App extends Component {
@@ -22,25 +20,8 @@ class App extends Component {
     }
   };
 
-  searchMovies = async categories => {
-    const genres = `&with_genres=${categories}`;
-    await axios
-      .get(
-        `https://api.themoviedb.org/3/discover/movie?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1${genres}`
-      )
-      .then(res => {
-        this.setState({ resultMovies: res.data });
-      });
-  };
-
-  searchBarMovie = async movie => {
-    await axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&query=${movie}&page=1`
-      )
-      .then(res => {
-        this.setState({ resultMovies: res.data });
-      });
+  resultMovies = response => {
+    this.setState({ resultMovies: response });
   };
 
   buttonState = btnState => {
@@ -65,6 +46,7 @@ class App extends Component {
             </Route>
             <Route exact path="/result">
               <PosterList
+                searchMovie={this.props.searchMovie}
                 resultMovies={this.state.resultMovies}
                 alreadySeen={this.alreadySeen}
                 movies={this.state.movies}
@@ -73,10 +55,10 @@ class App extends Component {
               />
             </Route>
             <Route exact path="/search">
-              <SearchMovie categories={this.searchMovies} />
+              <SearchMovie resultMovies={this.resultMovies} />
             </Route>
             <Route exact path="/">
-              <SearchBar searchMovie={this.searchBarMovie} />
+              <SearchBar resultMovies={this.resultMovies} />
             </Route>
             <Route path="/">
               <NotFound />

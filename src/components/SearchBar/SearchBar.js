@@ -3,11 +3,22 @@ import FontAwesome from "react-fontawesome";
 import "./SearchBar.css";
 import { Redirect } from "react-router-dom";
 import { Header, HeaderImg, Footer } from "../index";
+import axios from "axios";
 
 class SearchBar extends Component {
   state = {
     movie: "",
     redirect: false
+  };
+  searchBarMovie = async movie => {
+    await axios
+      .get(
+        `https://api.themoviedb.org/3/search/movie?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&query=${movie}&page=1`
+      )
+      .then(res => {
+        this.props.resultMovies(res.data);
+        this.setState({ redirect: true });
+      });
   };
 
   handleChange = event => {
@@ -18,11 +29,11 @@ class SearchBar extends Component {
 
   handleKeyUp = event => {
     if (event.key === "Enter") {
-      this.props.searchMovie(this.state.movie);
+      // this.props.searchMovie(this.state.movie);
       this.setState({
-        movie: "",
-        redirect: true
+        movie: ""
       });
+      this.searchBarMovie(this.state.movie);
     }
   };
 
@@ -40,7 +51,7 @@ class SearchBar extends Component {
       return <Redirect to="/result" />;
     }
     return (
-      <div className="app" >
+      <div className="app">
         <Header badge={5} />
         <HeaderImg />
         <div className="searchBar--container">
