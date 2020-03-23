@@ -1,9 +1,10 @@
-.searchBar--container {
+.searchBar-container {
   width: 100%;
   height: 6rem;
   display: flex;
   position: relative;
   align-items: center;
+  margin-top: 6rem;
   justify-content: center;
   background: #b64fcd;
   background: -webkit-linear-gradient(to right, #b64fcd, #3c19a8);
@@ -22,10 +23,11 @@
   align-items: center;
   justify-content: center;
 }
-.searchBar--input {
+
+.searchBar-input {
   font-size: 3rem;
   background: none;
-  color: #5a6674;
+  color: #5324af;
   width: 90%;
   height: 100%;
   border: none;
@@ -36,10 +38,13 @@
   font-family: "Wicked Scary Movie" !important;
   text-transform: uppercase;
 }
-.searchBar--input:focus {
+.searchBar-input::placeholder {
+  color: #5324af;
+}
+.searchBar-input:focus {
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
 }
-.searchBar--submit {
+.searchBar-submit {
   outline: none !important;
   cursor: pointer;
   padding: 0 2rem;
@@ -49,8 +54,8 @@
   justify-content: center;
   align-items: center;
 }
-.searchBar--submit:hover {
-  background: #901818;
+.searchBar-submit:hover {
+  background: #5324af;
   height: 3.8rem;
   color: white;
   border-top-right-radius: 4rem;
@@ -60,7 +65,7 @@
 .searchIcon {
   align-items: flex-start;
   font-size: 3rem;
-  color: #901818;
+  color: #5324af;
 }
 .searchIcon:hover {
   color: white;

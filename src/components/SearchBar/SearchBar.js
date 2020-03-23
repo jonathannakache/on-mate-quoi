@@ -29,7 +29,6 @@ class SearchBar extends Component {
 
   handleKeyUp = event => {
     if (event.key === "Enter") {
-      // this.props.searchMovie(this.state.movie);
       this.setState({
         movie: ""
       });
@@ -54,10 +53,10 @@ class SearchBar extends Component {
       <div className="app">
         <Header badge={5} />
         <HeaderImg />
-        <div className="searchBar--container">
+        <div className="searchBar-container">
           <div className="searchBar">
             <input
-              className="searchBar--input"
+              className="searchBar-input"
               type="text"
               placeholder="Rechercher un Film"
               value={this.state.movie}
@@ -65,7 +64,7 @@ class SearchBar extends Component {
               onKeyUp={this.handleKeyUp}
             />
 
-            <div className="searchBar--submit">
+            <div className="searchBar-submit">
               <FontAwesome
                 className="searchIcon"
                 onClick={this.handleSubmit}

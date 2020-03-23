@@ -36,10 +36,12 @@ export default class SearchMovie extends Component {
       return <Redirect to="/result" />;
     }
     return (
-      <div className="searchMovie">
-        <Header badge={5} />
-        <FormSearchMovie categories={this.categories} />
-        <Footer />
+      <div className="app">
+        <div className="searchMovie">
+          <Header badge={5} />
+          <FormSearchMovie categories={this.categories} />
+          <Footer />
+        </div>
       </div>
     );
   }
