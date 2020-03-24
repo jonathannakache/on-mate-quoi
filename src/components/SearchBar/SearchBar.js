@@ -38,7 +38,7 @@ class SearchBar extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.searchMovie(this.state.movie);
+    this.props.resultMovies(this.state.movie);
     this.setState({
       movie: "",
       redirect: true
