@@ -44,10 +44,12 @@
   margin-top: 4rem !important;
 }
 
-.ui.card>.content>.header, .ui.cards>.card>.content>.header {
+.ui.card > .content > .header,
+.ui.cards > .card > .content > .header {
   display: block;
-  margin: '';
-  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
-  color: rgba(0,0,0,.85);
+  margin: "";
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  color: rgba(0, 0, 0, 0.85);
   text-align: center;
+  height: 3.5rem;
 }

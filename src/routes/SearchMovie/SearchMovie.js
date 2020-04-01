@@ -28,7 +28,6 @@ export default class SearchMovie extends Component {
     return (
       <div className="app">
         <div className="searchMovie">
-          <Header badge={5} />
           <FormSearchMovie getForm={this.getForm} />
           <Footer />
         </div>

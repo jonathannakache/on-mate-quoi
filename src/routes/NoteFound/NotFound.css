@@ -156,7 +156,7 @@ ul {
   align-items: center;
 }
 
-li {
+/* li {
   float: left;
   padding: 0px 15px;
 }
@@ -178,7 +178,7 @@ li a {
 
 li a:hover {
   color: #ffcb39;
-}
+} */
 
 .btn-request {
   padding: 10px 25px;

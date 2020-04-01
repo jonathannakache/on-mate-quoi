@@ -4,43 +4,8 @@ import ButtonMovie from "../ButtonMovie/ButtonMovie";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 class Poster extends Component {
-  state = {
-    id: "",
-    isWatch: false,
-    isAddWatchlist: false
-  };
-
-  addWatchlist = movie => {
-    this.setState({
-      isWatch: this.state.isWatch,
-      isAddWatchlist: !this.state.isAddWatchlist,
-      id: movie
-    });
-    const btnState = {
-      isWatch: this.state.isWatch,
-      isAddWatchlist: !this.state.isAddWatchlist,
-      id: movie
-    };
-    this.props.buttonState(btnState);
-  };
-
-  alreadySeen = movie => {
-    this.setState({
-      isWatch: !this.state.isWatch,
-      isAddWatchlist: this.state.isAddWatchlist,
-      id: movie
-    });
-    const btnState = {
-      isWatch: this.state.isWatch,
-      isAddWatchlist: !this.state.isAddWatchlist,
-      id: movie
-    };
-    this.props.buttonState(btnState);
-  };
-
   render() {
-    const { image, title, releaseDate, id } = this.props;
-    const { isWatch, isAddWatchlist } = this.state;
+    const { image, title, releaseDate, id, movies, buttonState } = this.props;
     return (
       <>
         <Link to={`/movie/${id}`}>
@@ -58,12 +23,7 @@ class Poster extends Component {
             </Card.Content>
           </Card>
         </Link>
-        <ButtonMovie
-          isWatch={isWatch}
-          isAddWatchlist={isAddWatchlist}
-          addWatchlist={() => this.addWatchlist(id)}
-          alreadySeen={() => this.alreadySeen(id)}
-        />
+        <ButtonMovie id={id} movies={movies} buttonState={buttonState} />
       </>
     );
   }

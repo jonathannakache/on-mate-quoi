@@ -3,10 +3,10 @@ import "./NotFound.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Header } from "../../components/";
 
-const NotFound = () => {
+const NotFound = ({ isAuth, userData }) => {
   return (
     <body className="bg-purple">
-      <Header badge={5} />
+      {/* <Header badge={5} isAuth={isAuth} userData={userData} /> */}
 
       <div className="stars">
         <div className="central-body">

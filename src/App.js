@@ -1,71 +1,162 @@
 import React, { Component } from "react";
-import { HeaderImg, SearchBar, PosterList } from "./components";
-import { LoginForm, NotFound, MovieId } from "./routes";
+import { SearchBar, PosterList, Header } from "./components";
+import { LoginForm, NotFound, MovieId, Register } from "./routes";
+import WithAuth from "./withAuth";
+import MonCompte from "./MonCompte";
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory,
+  useLocation,
+  Redirect
+} from "react-router-dom";
 import SearchMovie from "./routes/SearchMovie/SearchMovie";
+
+// export let auth = {
+//   isAuth: false
+// };
 
 class App extends Component {
   state = {
-    movies: [
-      {
-        id: "",
-        isWatch: false,
-        isAddWatchlist: false
-      }
-    ],
+    userData: {},
     movie: "",
+    isAuth: false,
     resultMovies: {
       results: []
     }
+  };
+
+  updateUser = async () => {
+    const userData = this.state.userData;
+    await fetch("/api/update", {
+      method: "POST",
+      body: JSON.stringify({ userData }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => console.log(res, " RESPONSE"))
+      .catch(err => {
+        console.error(err, "CATCH");
+      });
+  };
+  async componentDidMount() {
+    await fetch("/api/getData")
+      .then(res => res.text())
+      .then(res => {
+        this.setState({
+          userData: JSON.parse(res),
+          isAuth: true
+        });
+      })
+      .catch(err => {
+        console.error(err, "CATCH");
+      });
+  }
+
+  userData = (data, isAuth) => {
+    this.setState({
+      userData: data,
+      isAuth: isAuth
+    });
+  };
+
+  isAuth = isAuth => {
+    this.setState({
+      isAuth: isAuth
+    });
   };
 
   resultMovies = response => {
     this.setState({ resultMovies: response });
   };
 
-  buttonState = btnState => {
-    const filteredItem = this.state.movies.filter(
-      item => item.id !== btnState.id
+  buttonState = async btnState => {
+    console.log(btnState.id, "btnstate");
+    const selectedItem = this.state.userData.movies.find(
+      item => item.id === btnState.id
     );
-    this.setState({
-      movies: [...filteredItem, btnState]
-    });
+    if (selectedItem === undefined) {
+      await this.setState(prevState => ({
+        userData: {
+          ...prevState.userData,
+          movies: [...prevState.userData.movies, btnState]
+        }
+      }));
+    } else {
+      const filteredItem = this.state.userData.movies.filter(
+        item => item.id !== btnState.id
+      );
+
+      await this.setState(prevState => ({
+        userData: { ...prevState.userData, movies: filteredItem }
+      }));
+    }
+
+    this.updateUser();
   };
 
   render() {
     return (
-      <div className="App">
-        <Router>
+      <Router>
+        <div className="App">
+          <Header
+            badge={5}
+            isAuth={this.state.isAuth}
+            userData={this.userData}
+          />
+
           <Switch>
-            <Route exact path="/login">
-              <LoginForm />
+            {/* PRIVATE */}
+            <Route exact path="/moncompte">
+              <WithAuth child={MonCompte} userData={this.userData} />
             </Route>
+
             <Route exact path="/movie/:movie">
-              <MovieId />
+              <WithAuth child={MovieId} userData={this.userData} />
             </Route>
+
             <Route exact path="/result">
-              <PosterList
+              <WithAuth
+                child={PosterList}
+                userData={this.userData}
                 searchMovie={this.props.searchMovie}
                 resultMovies={this.state.resultMovies}
-                alreadySeen={this.alreadySeen}
-                movies={this.state.movies}
-                wishList={this.state.wishList}
+                movies={this.state.userData.movies}
                 buttonState={this.buttonState}
               />
             </Route>
+
             <Route exact path="/search">
-              <SearchMovie resultMovies={this.resultMovies} />
+              <WithAuth
+                child={SearchMovie}
+                resultMovies={this.resultMovies}
+                userData={this.userData}
+              />
+            </Route>
+
+            {/* PUBLIC */}
+            <Route exact path="/login">
+              <LoginForm userData={this.userData} isAuth={this.state.isAuth} />
+            </Route>
+            <Route exact path="/register">
+              <Register />
             </Route>
             <Route exact path="/">
-              <SearchBar resultMovies={this.resultMovies} />
+              <SearchBar
+                resultMovies={this.resultMovies}
+                isAuth={this.state.isAuth}
+              />
             </Route>
             <Route path="/">
-              <NotFound />
+              <NotFound isAuth={this.state.isAuth} userData={this.userData} />
             </Route>
           </Switch>
-        </Router>
-      </div>
+        </div>
+      </Router>
     );
   }
 }

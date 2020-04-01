@@ -10,6 +10,7 @@ class SearchBar extends Component {
     movie: "",
     redirect: false
   };
+
   searchBarMovie = async movie => {
     await axios
       .get(
@@ -29,29 +30,21 @@ class SearchBar extends Component {
 
   handleKeyUp = event => {
     if (event.key === "Enter") {
-      this.setState({
-        movie: ""
-      });
       this.searchBarMovie(this.state.movie);
     }
   };
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
-    this.props.resultMovies(this.state.movie);
-    this.setState({
-      movie: "",
-      redirect: true
-    });
+    this.searchBarMovie(this.state.movie);
   };
 
   render() {
     if (this.state.redirect) {
       return <Redirect to="/result" />;
     }
-    return (
+    return this.props.isAuth ? (
       <div className="app">
-        <Header badge={5} />
         <HeaderImg />
         <div className="searchBar-container">
           <div className="searchBar">
@@ -73,6 +66,11 @@ class SearchBar extends Component {
             </div>
           </div>
         </div>
+        <Footer />
+      </div>
+    ) : (
+      <div className="app">
+        <HeaderImg />
         <Footer />
       </div>
     );

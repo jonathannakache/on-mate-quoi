@@ -107,7 +107,7 @@ class MovieId extends Component {
               src={`https://www.youtube.com/embed/${getVideo.results[0].key}`}
               frameborder="0"
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              allowfullscreen="true"
             ></iframe>
           </div>
         ) : (
@@ -121,7 +121,6 @@ class MovieId extends Component {
 
     return (
       <div className="app">
-        <Header badge={5} />
         <div className="bg">
           {load ? this.renderMovie() : `erreur`}
           <Footer />

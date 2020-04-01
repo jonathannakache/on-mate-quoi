@@ -19,3 +19,11 @@
   color: rgba(0, 0, 0, 0.85);
   text-align: center;
 }
+.ui.card > .content > .header:not(.ui),
+.ui.cards > .card > .content > .header:not(.ui) {
+  font-weight: 700;
+  font-size: 1.28571429em;
+  margin-top: -0.21425em;
+  line-height: 1.28571429em;
+  height: 3rem !important;
+}
