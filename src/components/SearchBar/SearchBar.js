@@ -1,40 +1,41 @@
 import React, { Component } from "react";
-import FontAwesome from "react-fontawesome";
 import "./SearchBar.css";
+import { HeaderImg } from "../index";
 import { Redirect } from "react-router-dom";
-import { Header, HeaderImg, Footer } from "../index";
+import FontAwesome from "react-fontawesome";
+import { isAuth as Auth } from "../../utils/isAuth";
 import axios from "axios";
 
 class SearchBar extends Component {
   state = {
     movie: "",
-    redirect: false
+    redirect: false,
   };
 
-  searchBarMovie = async movie => {
+  searchBarMovie = async (movie) => {
     await axios
       .get(
         `https://api.themoviedb.org/3/search/movie?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&query=${movie}&page=1`
       )
-      .then(res => {
+      .then((res) => {
         this.props.resultMovies(res.data);
-        this.setState({ redirect: true });
+        this.setState({ redirect: true, searchBarMovie: "", movie: "" });
       });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      movie: event.target.value
+      movie: event.target.value,
     });
   };
 
-  handleKeyUp = event => {
+  handleKeyUp = (event) => {
     if (event.key === "Enter") {
       this.searchBarMovie(this.state.movie);
     }
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     this.searchBarMovie(this.state.movie);
   };
@@ -43,35 +44,31 @@ class SearchBar extends Component {
     if (this.state.redirect) {
       return <Redirect to="/result" />;
     }
-    return this.props.isAuth ? (
-      <div className="app">
-        <HeaderImg />
-        <div className="searchBar-container">
-          <div className="searchBar">
-            <input
-              className="searchBar-input"
-              type="text"
-              placeholder="Rechercher un Film"
-              value={this.state.movie}
-              onChange={this.handleChange}
-              onKeyUp={this.handleKeyUp}
+    return Auth.authentificated ? (
+      <>
+        <h3>Hello John</h3>
+        <h4>Recherche rapide</h4>
+        <div className="searchbar">
+          <input
+            className="searchbar-input"
+            type="text"
+            placeholder="Rechercher un Film"
+            value={this.state.movie}
+            onChange={this.handleChange}
+            onKeyUp={this.handleKeyUp}
+          />
+          <div className="searchbar-submit">
+            <FontAwesome
+              className="search-icon"
+              onClick={this.handleSubmit}
+              name="search"
             />
-
-            <div className="searchBar-submit">
-              <FontAwesome
-                className="searchIcon"
-                onClick={this.handleSubmit}
-                name="search"
-              />
-            </div>
           </div>
         </div>
-        <Footer />
-      </div>
+      </>
     ) : (
       <div className="app">
         <HeaderImg />
-        <Footer />
       </div>
     );
   }

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./MovieId.css";
 import axios from "axios";
-import { Footer, Header } from "../../components";
 
 class MovieId extends Component {
   state = {
@@ -9,7 +8,7 @@ class MovieId extends Component {
     getVideo: {},
     resultMovies: {},
     getCredit: {},
-    load: false
+    load: false,
   };
 
   async componentDidMount() {
@@ -26,7 +25,7 @@ class MovieId extends Component {
         ),
         await axios.get(
           `https://api.themoviedb.org/3/movie/${movieID}?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR`
-        )
+        ),
       ])
       .then(
         axios.spread((getVideo, getCredit, getDetail) => {
@@ -35,7 +34,7 @@ class MovieId extends Component {
             resultMovies: getDetail.data,
             getCredit: getCredit.data,
             id: movieID,
-            load: true
+            load: true,
           });
         })
       );
@@ -49,12 +48,12 @@ class MovieId extends Component {
     }
     const { resultMovies, getVideo, getCredit } = this.state;
     const director = getCredit.crew.filter(
-      director => director.job === "Director"
+      (director) => director.job === "Director"
     )[0].name;
 
     return (
       <div className=" container">
-        <div className="search-movie movie-id row">
+        <div className="row">
           <div className="col-3">
             <figure>
               <img
@@ -74,7 +73,7 @@ class MovieId extends Component {
             <p>Acteurs :</p>
             <p className="categories">
               {getCredit.cast
-                .map(acteur => (
+                .map((acteur) => (
                   <span className="categories">{acteur.name}</span>
                 ))
                 .slice(0, 7)}
@@ -83,7 +82,7 @@ class MovieId extends Component {
               {resultMovies.genres.length > 1 ? "Categories :" : "Categorie :"}
             </p>
             <p>
-              {resultMovies.genres.map(element => (
+              {resultMovies.genres.map((element) => (
                 <span className="categories">{element.name}</span>
               ))}
             </p>
@@ -121,10 +120,7 @@ class MovieId extends Component {
 
     return (
       <div className="app">
-        <div className="bg">
-          {load ? this.renderMovie() : `erreur`}
-          <Footer />
-        </div>
+        <div className="bg">{load ? this.renderMovie() : `erreur`}</div>
       </div>
     );
   }

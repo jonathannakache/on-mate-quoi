@@ -5,80 +5,80 @@ import "./FormSearchMovie.css";
 const genres = [
   {
     id: 28,
-    name: "Action"
+    name: "Action",
   },
   {
     id: 12,
-    name: "Aventure"
+    name: "Aventure",
   },
   {
     id: 16,
-    name: "Animation"
+    name: "Animation",
   },
   {
     id: 35,
-    name: "Comédie"
+    name: "Comédie",
   },
   {
     id: 80,
-    name: "Crime"
+    name: "Crime",
   },
   {
     id: 99,
-    name: "Documentaire"
+    name: "Documentaire",
   },
   {
     id: 18,
-    name: "Drame"
+    name: "Drame",
   },
   {
     id: 10751,
-    name: "Familial"
+    name: "Familial",
   },
   {
     id: 14,
-    name: "Fantastique"
+    name: "Fantastique",
   },
   {
     id: 36,
-    name: "Histoire"
+    name: "Histoire",
   },
   {
     id: 27,
-    name: "Horreur"
+    name: "Horreur",
   },
   {
     id: 10402,
-    name: "Musique"
+    name: "Musique",
   },
   {
     id: 9648,
-    name: "Mystère"
+    name: "Mystère",
   },
   {
     id: 10749,
-    name: "Romance"
+    name: "Romance",
   },
   {
     id: 878,
-    name: "Science-Fiction"
+    name: "Science-Fiction",
   },
   {
     id: 10770,
-    name: "Téléfilm"
+    name: "Téléfilm",
   },
   {
     id: 53,
-    name: "Thriller"
+    name: "Thriller",
   },
   {
     id: 10752,
-    name: "Guerre"
+    name: "Guerre",
   },
   {
     id: 37,
-    name: "Western"
-  }
+    name: "Western",
+  },
 ];
 
 class FormSearchMovie extends Component {
@@ -87,10 +87,10 @@ class FormSearchMovie extends Component {
     acteur: "",
     acteurID: "",
     year: "",
-    resultsPeople: []
+    resultsPeople: [],
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     const { year, acteurID, genre } = this.state;
     event.preventDefault();
     const genreSeparate = genre.join(",");
@@ -98,21 +98,21 @@ class FormSearchMovie extends Component {
     this.setState({ genre: [], acteurID: "", year: "" });
   };
 
-  handleClick = event => {
+  handleClick = (event) => {
     const isInclude = this.state.genre.includes(event.target.id);
     if (isInclude) {
       this.setState({
-        genre: this.state.genre.filter(item => item !== event.target.id)
+        genre: this.state.genre.filter((item) => item !== event.target.id),
       });
     } else {
       this.setState({
-        genre: [...this.state.genre, event.target.id]
+        genre: [...this.state.genre, event.target.id],
       });
     }
   };
   renderPeople = () => {
     const renderPeople = this.state.resultsPeople
-      .map(people => {
+      .map((people) => {
         return (
           <div
             onClick={() =>
@@ -127,39 +127,42 @@ class FormSearchMovie extends Component {
     return renderPeople;
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
-  handleChangePeople = async event => {
+  handleChangePeople = async (event) => {
     await this.setState({
-      acteur: event.target.value
+      acteur: event.target.value,
     });
     const person = this.state.acteur;
     await axios
       .get(
         `https://api.themoviedb.org/3/search/person?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&query=${person}&page=1&include_adult=false`
       )
-      .then(res => {
+      .then((res) => {
         this.setState({
-          resultsPeople: res.data.results
+          resultsPeople: res.data.results,
         });
       });
   };
   render() {
     return (
-      <form className="formSearchMovie container" onSubmit={this.handleSubmit}>
+      <form
+        className="form-search-movie container"
+        onSubmit={this.handleSubmit}
+      >
         <div className="form-check row">
-          <h3 className="formSearchMovieTitles">Categories :</h3>
-          {genres.map(genre => {
+          <h4 className="formSearchMovieTitles">Catégories</h4>
+          {genres.map((genre) => {
             return (
               <input
                 className={
                   this.state.genre.includes(genre.id.toString())
-                    ? "col-2 formSearchMovieCategoriesInclude"
-                    : "col-2 formSearchMovieCategories"
+                    ? "col-2 form-search-movie-categories-include"
+                    : "col-2 form-search-movie-categories"
                 }
                 type="button"
                 key={genre.id}
@@ -171,45 +174,48 @@ class FormSearchMovie extends Component {
             );
           })}
         </div>
-        <h3 className="formSearchMovieTitles">Acteur :</h3>
-        <input
-          className="formSearchMovieInput"
-          type="text"
-          placeholder="acteur"
-          name="acteur"
-          id="acteur"
-          autocomplete="off"
-          onChange={this.handleChangePeople}
-          value={this.state.acteur}
-        />
-        {this.state.resultsPeople
-          .map(people => {
-            return (
-              <div
-                className="peoples"
-                onClick={() =>
-                  this.setState({
-                    acteur: people.name,
-                    acteurID: people.id,
-                    resultsPeople: []
-                  })
-                }
-              >
-                {people.name}
-              </div>
-            );
-          })
-          .slice(0, 7)}
-        <h3 className="formSearchMovieTitles">Année du film :</h3>
-        <input
-          type="number"
-          placeholder="Année du film"
-          name="year"
-          className="formSearchMovieInput"
-          id="year"
-          onChange={this.handleChange}
-          value={this.state.year}
-        />
+        <div className="form-search-movie-bg">
+          <h4 className="formSearchMovieTitles">Acteur</h4>
+          <input
+            className="formSearchMovieInput"
+            type="text"
+            placeholder="..."
+            name="acteur"
+            id="acteur"
+            autocomplete="off"
+            onChange={this.handleChangePeople}
+            value={this.state.acteur}
+          />
+          {this.state.resultsPeople
+            .map((people) => {
+              return (
+                <div
+                  className="peoples"
+                  onClick={() =>
+                    this.setState({
+                      acteur: people.name,
+                      acteurID: people.id,
+                      resultsPeople: [],
+                    })
+                  }
+                >
+                  {people.name}
+                </div>
+              );
+            })
+            .slice(0, 7)}
+        </div>
+        <div className="form-search-movie-bg">
+          <h4 className="formSearchMovieTitles">Année du film</h4>
+          <input
+            placeholder="..."
+            name="year"
+            className="formSearchMovieInput"
+            id="year"
+            onChange={this.handleChange}
+            value={this.state.year}
+          />
+        </div>
 
         <button
           type="submit"

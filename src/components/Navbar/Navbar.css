@@ -1,0 +1,41 @@
+.navbar-fix {
+  padding-top: 6rem;
+  width: 15rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: #363636;
+  color: #fff;
+  position: fixed;
+}
+.navbar-content {
+  height: 60%;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.navbar-content h3 {
+  font-size: 1.2rem;
+}
+.navbar-logout {
+  margin-bottom: 3rem;
+}
+
+.navbar-logout h3:hover {
+  color: #c55958;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.navbar-link {
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding-left: 1.7rem;
+  margin: 1.5rem 0;
+}
+.navbar-link:hover {
+  color: #c55958;
+}

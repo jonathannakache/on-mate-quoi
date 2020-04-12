@@ -1,12 +1,14 @@
-.colorr {
-  color: #b64fcd !important;
-  font-weight: bold !important;
+.login-form {
+  display: flex !important;
+  align-content: center !important;
+  height: 700px;
+  width: 500px !important;
+  margin: auto !important;
 }
-.bgColor {
-  /* background-color: #C1292E !important; */
-  background: #b64fcd !important;
-  background: -webkit-linear-gradient(to right, #b64fcd, #3c19a8) !important;
-  background: linear-gradient(to right, #b64fcd, #3c19a8) !important;
-
+.login-btn {
+  background-color: #c55958 !important;
   color: white !important;
+}
+.register {
+  color: #c55958 !important;
 }

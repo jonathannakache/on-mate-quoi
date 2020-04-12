@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Bowlby+One+SC|Luckiest+Guy|Sunshiney|Supermercado+One&display=swap");
 
-* {
-  box-sizing: border-box;
-  font-family: "Bowlby One SC", cursive;
-}
 
 body {
   margin: 0;
@@ -15,7 +11,7 @@ body {
 }
 
 body > #root > div {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 code {

@@ -1,0 +1,12 @@
+.watchlist span {
+  font-size: 2rem;
+  color: #fff;
+}
+.color {
+  color: #c55958 !important;
+}
+.watchlist h4 {
+  font-size: 2rem;
+  text-align: center;
+  margin: 2rem;
+}

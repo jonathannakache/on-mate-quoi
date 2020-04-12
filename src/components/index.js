@@ -7,3 +7,4 @@ export * from "./Footer/Footer";
 export * from "./ButtonMovie/ButtonMovie";
 export * from "./FormSearchMovie/FormSearchMovie";
 export * from "./Poster/Poster";
+export * from "./Navbar/Navbar";

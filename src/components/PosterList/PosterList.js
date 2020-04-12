@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import { Grid, Container } from "semantic-ui-react";
-import { Poster, Footer, Header } from "../index";
+import { Poster } from "../index";
 import "./PosterList.css";
 import { Link } from "react-router-dom";
 
 class PosterList extends Component {
   renderMovies = () => {
-    const { resultMovies, buttonState } = this.props;
+    const { resultMovies, buttonState, movies } = this.props;
 
-    const renderMovies = resultMovies.results.map(movie => {
+    const renderMovie = resultMovies.results.map((movie) => {
       if (movie.poster_path && movie.overview !== "") {
         return (
           <Grid.Column key={movie.id}>
             <Poster
-              movies={this.props.movies}
+              movies={movies}
               title={movie.title}
               releaseDate={movie.release_date}
               id={movie.id}
@@ -26,28 +26,26 @@ class PosterList extends Component {
         );
       }
     });
-    return renderMovies;
+    return renderMovie;
   };
 
   render() {
     return (
-      <div className="app">
+      <div>
         {this.props.resultMovies.results.length === 0 ? (
-          <div className="posterList">
+          <div>
             <h1>pas de films</h1>
             <Link to="/search">
               <button>rechercher un film </button>
             </Link>
-            <Footer />
           </div>
         ) : (
-          <div className="posterLwt">
+          <div>
             <Container>
               <Grid columns={4} stackable>
                 <Grid.Row>{this.renderMovies()}</Grid.Row>
               </Grid>
             </Container>
-            <Footer />
           </div>
         )}
       </div>

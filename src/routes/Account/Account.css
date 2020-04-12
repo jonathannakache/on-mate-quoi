@@ -1,0 +1,14 @@
+.account-btn {
+  padding: 2rem;
+  margin: 2rem;
+  background-color: #c55958;
+  border: 1px solid white;
+  color: white;
+  text-align: center;
+  font-size: 2rem;
+  text-decoration: none;
+  border-radius: 20px;
+}
+.account-btn:hover {
+  background-color: #a44d4c;
+}

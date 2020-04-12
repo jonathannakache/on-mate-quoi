@@ -1,32 +1,61 @@
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import React, { Component } from "react";
-import { SearchBar, PosterList, Header } from "./components";
-import { LoginForm, NotFound, MovieId, Register } from "./routes";
-import WithAuth from "./withAuth";
-import MonCompte from "./MonCompte";
-import "./App.css";
+import { SearchBar, PosterList, Header, Footer, Navbar } from "./components";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-  useLocation,
-  Redirect
-} from "react-router-dom";
-import SearchMovie from "./routes/SearchMovie/SearchMovie";
-
-// export let auth = {
-//   isAuth: false
-// };
+  LoginForm,
+  NotFound,
+  MovieId,
+  Register,
+  Watchlist,
+  UserSettings,
+  Account,
+  SearchMovie,
+  Popular,
+  TopRated,
+  NewMovies
+} from "./routes";
+import AuthService from "./utils/AuthService";
+import "./App.css";
+import { isAuth } from "./utils/isAuth";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+toast.configure();
 
 class App extends Component {
   state = {
-    userData: {},
+    userData: {
+      movies: [],
+    },
     movie: "",
-    isAuth: false,
     resultMovies: {
-      results: []
-    }
+      results: [],
+    },
+    watchlistLength: "",
+  };
+
+  async componentDidMount() {
+    await fetch("/checkToken")
+      .then((res) => {
+        if (res.status === 200) {
+          isAuth.authentificated = true;
+          this.getData();
+        } else {
+          const error = new Error(res.error);
+          throw error;
+        }
+      })
+      .catch((err) => {
+        isAuth.authentificated = false;
+        this.setState({
+          userData: {
+            movies: [{}],
+          },
+        });
+      });
+  }
+
+  moviesLenght = (moviesLenght) => {
+    this.setState({ moviesLenght });
   };
 
   updateUser = async () => {
@@ -35,68 +64,101 @@ class App extends Component {
       method: "POST",
       body: JSON.stringify({ userData }),
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(res => console.log(res, " RESPONSE"))
-      .catch(err => {
+      .then((res) => {})
+      .catch((err) => {
         console.error(err, "CATCH");
       });
   };
-  async componentDidMount() {
+
+  logout = (toast) => {
+    isAuth.authentificated = false;
+    this.setState({
+      userData: {
+        movies: [{}],
+      },
+    });
+    if (toast === "logout") {
+      this.SeeYouSoon(`À bientot 😉`);
+    } else {
+      this.SeeYouSoon(`La cession a expire`);
+    }
+  };
+
+  SeeYouSoon = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
+  getData = async () => {
     await fetch("/api/getData")
-      .then(res => res.text())
-      .then(res => {
+      .then((res) => res.text())
+      .then((res) => {
         this.setState({
           userData: JSON.parse(res),
-          isAuth: true
         });
+        isAuth.authentificated = true;
       })
-      .catch(err => {
-        console.error(err, "CATCH");
+      .catch((err) => {
+        isAuth.authentificated = false;
       });
-  }
 
-  userData = (data, isAuth) => {
+    this.updateWatchlist();
+  };
+
+  userData = (data, aut) => {
+    isAuth.authentificated = aut;
     this.setState({
       userData: data,
-      isAuth: isAuth
     });
+    this.updateWatchlist();
   };
 
-  isAuth = isAuth => {
-    this.setState({
-      isAuth: isAuth
-    });
-  };
-
-  resultMovies = response => {
+  resultMovies = (response) => {
     this.setState({ resultMovies: response });
   };
 
-  buttonState = async btnState => {
-    console.log(btnState.id, "btnstate");
+  buttonState = async (btnState) => {
     const selectedItem = this.state.userData.movies.find(
-      item => item.id === btnState.id
+      (item) => item.id === btnState.id
     );
     if (selectedItem === undefined) {
-      await this.setState(prevState => ({
+      await this.setState((prevState) => ({
         userData: {
           ...prevState.userData,
-          movies: [...prevState.userData.movies, btnState]
-        }
+          movies: [...prevState.userData.movies, btnState],
+        },
       }));
     } else {
       const filteredItem = this.state.userData.movies.filter(
-        item => item.id !== btnState.id
+        (item) => item.id !== btnState.id
       );
 
-      await this.setState(prevState => ({
-        userData: { ...prevState.userData, movies: filteredItem }
+      this.setState((prevState) => ({
+        userData: { ...prevState.userData, movies: filteredItem },
       }));
     }
-
+    this.updateWatchlist();
     this.updateUser();
+  };
+
+  updateWatchlist = async () => {
+    const movies = this.state.userData.movies;
+    let arrWatchlist = [];
+    const allMovies = await movies.map((movie) => {
+      if (movie.isAddWatchlist) {
+        arrWatchlist.push(movie.id);
+      }
+    });
+    this.setState({ watchlistLength: arrWatchlist.length });
   };
 
   render() {
@@ -104,60 +166,97 @@ class App extends Component {
       <Router>
         <div className="App">
           <Header
-            badge={5}
-            isAuth={this.state.isAuth}
-            userData={this.userData}
+            badge={this.state.watchlistLength}
+            resultMovies={this.resultMovies}
           />
+          <div className="content">
+            <div className={isAuth.authentificated ? "navbar-width" : null}>
+              <Navbar badge={this.state.watchlistLength} logout={this.logout} />
+            </div>
+            <div className="main">
+              <Switch>
+                {/* PRIVATE */}
+                <Route exact path="/popular">
+                  <AuthService
+                    child={Popular}
+                    logout={this.logout}
+                    movies={this.state.userData.movies}
+                    buttonState={this.buttonState}
+                  />
+                </Route>
+                <Route exact path="/new-movies">
+                  <AuthService
+                    child={NewMovies}
+                    logout={this.logout}
+                    movies={this.state.userData.movies}
+                    buttonState={this.buttonState}
+                  />
+                </Route>
+                <Route exact path="/top-rated">
+                  <AuthService
+                    child={TopRated}
+                    logout={this.logout}
+                    movies={this.state.userData.movies}
+                    buttonState={this.buttonState}
+                  />
+                </Route>
+                <Route exact path="/watchlist">
+                  <AuthService
+                    child={Watchlist}
+                    buttonState={this.buttonState}
+                    logout={this.logout}
+                    watchlistLength={this.state.watchlistLength}
+                  />
+                </Route>
+                <Route exact path="/settings">
+                  <AuthService child={UserSettings} logout={this.logout} />
+                </Route>
+                <Route exact path="/account">
+                  <AuthService child={Account} logout={this.logout} />
+                </Route>
 
-          <Switch>
-            {/* PRIVATE */}
-            <Route exact path="/moncompte">
-              <WithAuth child={MonCompte} userData={this.userData} />
-            </Route>
+                <Route exact path="/movie/:movie">
+                  <AuthService child={MovieId} logout={this.logout} />
+                </Route>
 
-            <Route exact path="/movie/:movie">
-              <WithAuth child={MovieId} userData={this.userData} />
-            </Route>
+                <Route exact path="/result">
+                  <AuthService
+                    child={PosterList}
+                    logout={this.logout}
+                    movies={this.state.userData.movies}
+                    buttonState={this.buttonState}
+                    resultMovies={this.state.resultMovies}
+                  />
+                </Route>
 
-            <Route exact path="/result">
-              <WithAuth
-                child={PosterList}
-                userData={this.userData}
-                searchMovie={this.props.searchMovie}
-                resultMovies={this.state.resultMovies}
-                movies={this.state.userData.movies}
-                buttonState={this.buttonState}
-              />
-            </Route>
+                <Route exact path="/search">
+                  <AuthService
+                    child={SearchMovie}
+                    logout={this.logout}
+                    resultMovies={this.resultMovies}
+                  />
+                </Route>
 
-            <Route exact path="/search">
-              <WithAuth
-                child={SearchMovie}
-                resultMovies={this.resultMovies}
-                userData={this.userData}
-              />
-            </Route>
-
-            {/* PUBLIC */}
-            <Route exact path="/login">
-              <LoginForm userData={this.userData} isAuth={this.state.isAuth} />
-            </Route>
-            <Route exact path="/register">
-              <Register />
-            </Route>
-            <Route exact path="/">
-              <SearchBar
-                resultMovies={this.resultMovies}
-                isAuth={this.state.isAuth}
-              />
-            </Route>
-            <Route path="/">
-              <NotFound isAuth={this.state.isAuth} userData={this.userData} />
-            </Route>
-          </Switch>
+                {/* PUBLIC */}
+                <Route exact path="/login">
+                  <LoginForm userData={this.userData} />
+                </Route>
+                <Route exact path="/register">
+                  <Register />
+                </Route>
+                <Route exact path="/">
+                  <SearchBar resultMovies={this.resultMovies} />
+                </Route>
+                <Route path="/">
+                  <NotFound />
+                </Route>
+              </Switch>
+            </div>
+          </div>
         </div>
       </Router>
     );
+    // <Footer />;
   }
 }
 
