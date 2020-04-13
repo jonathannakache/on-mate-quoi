@@ -7,32 +7,34 @@ import { Link } from "react-router-dom";
 class PosterList extends Component {
   renderMovies = () => {
     const { resultMovies, buttonState, movies } = this.props;
-
-    const renderMovie = resultMovies.results.map((movie) => {
-      if (movie.poster_path && movie.overview !== "") {
-        return (
-          <Grid.Column key={movie.id}>
-            <Poster
-              movies={movies}
-              title={movie.title}
-              releaseDate={movie.release_date}
-              id={movie.id}
-              note={movie.vote_average}
-              langueOriginal={movie.original_language}
-              image={movie.poster_path}
-              buttonState={buttonState}
-            />
-          </Grid.Column>
-        );
-      }
+    const render = resultMovies.map((page) => {
+      const onePage = page.results.map((movie) => {
+        if (movie.poster_path && movie.overview !== "") {
+          return (
+            <Grid.Column key={movie.id}>
+              <Poster
+                movies={movies}
+                title={movie.title}
+                releaseDate={movie.release_date}
+                id={movie.id}
+                note={movie.vote_average}
+                langueOriginal={movie.original_language}
+                image={movie.poster_path}
+                buttonState={buttonState}
+              />
+            </Grid.Column>
+          );
+        }
+      });
+      return onePage;
     });
-    return renderMovie;
+    return render;
   };
 
   render() {
     return (
       <div>
-        {this.props.resultMovies.results.length === 0 ? (
+        {this.props.resultMovies[0].results.length === 0 ? (
           <div>
             <h1>pas de films</h1>
             <Link to="/search">

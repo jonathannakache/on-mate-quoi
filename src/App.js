@@ -1,8 +1,9 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React, { Component } from "react";
-import { SearchBar, PosterList, Header, Footer, Navbar } from "./components";
+import { PosterList, Header, Footer, Navbar } from "./components";
 import {
+  Home,
   LoginForm,
   NotFound,
   MovieId,
@@ -13,7 +14,8 @@ import {
   SearchMovie,
   Popular,
   TopRated,
-  NewMovies
+  NewMovies,
+  Upcoming,
 } from "./routes";
 import AuthService from "./utils/AuthService";
 import "./App.css";
@@ -27,9 +29,11 @@ class App extends Component {
       movies: [],
     },
     movie: "",
-    resultMovies: {
-      results: [],
-    },
+    resultMovies: [
+      {
+        results: [],
+      },
+    ],
     watchlistLength: "",
   };
 
@@ -122,8 +126,10 @@ class App extends Component {
     this.updateWatchlist();
   };
 
-  resultMovies = (response) => {
-    this.setState({ resultMovies: response });
+  resultMovies = (total) => {
+    console.log(total);
+
+    this.setState({ resultMovies: total });
   };
 
   buttonState = async (btnState) => {
@@ -200,6 +206,16 @@ class App extends Component {
                     buttonState={this.buttonState}
                   />
                 </Route>
+
+                <Route exact path="/upcoming">
+                  <AuthService
+                    child={Upcoming}
+                    logout={this.logout}
+                    movies={this.state.userData.movies}
+                    buttonState={this.buttonState}
+                  />
+                </Route>
+
                 <Route exact path="/watchlist">
                   <AuthService
                     child={Watchlist}
@@ -245,7 +261,7 @@ class App extends Component {
                   <Register />
                 </Route>
                 <Route exact path="/">
-                  <SearchBar resultMovies={this.resultMovies} />
+                  <Home resultMovies={this.resultMovies} />
                 </Route>
                 <Route path="/">
                   <NotFound />

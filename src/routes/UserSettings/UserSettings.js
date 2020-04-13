@@ -149,7 +149,7 @@ class UserSettings extends Component {
             Retour
           </Link>
         </div>
-        <h1 style={{ textAlign: "center", fontSize: "2rem" }}>LOADING</h1>
+        <p className="loading">CHARGEMENT</p>
         <div className="loader"></div>
       </div>
     );

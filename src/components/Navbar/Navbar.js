@@ -66,6 +66,18 @@ const Navbar = ({ badge, logout }) => {
               <i class="fas fa-star"></i> Les mieux notés
             </NavLink>
           </div>
+          <div className="navbar-link">
+            <NavLink
+              to="/upcoming"
+              style={{
+                color: "inherit",
+                listStyle: "none",
+                textDecoration: "none",
+              }}
+            >
+              <i class="fas fa-star"></i> Prochaines sorties
+            </NavLink>
+          </div>
 
           <div className="navbar-link">
             <NavLink

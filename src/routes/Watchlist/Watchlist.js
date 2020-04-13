@@ -164,7 +164,7 @@ class Watchlist extends Component {
             Retour
           </Link>
         </div>
-        <h4 style={{ textAlign: "center", fontSize: "2rem" }}>LOADING</h4>
+        <p className="loading">CHARGEMENT</p>
         <div className="loader"></div>
       </div>
     );

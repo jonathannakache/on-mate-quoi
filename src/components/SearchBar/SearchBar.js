@@ -1,77 +1,78 @@
-import React, { Component } from "react";
 import "./SearchBar.css";
-import { HeaderImg } from "../index";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import FontAwesome from "react-fontawesome";
 import { isAuth as Auth } from "../../utils/isAuth";
 import axios from "axios";
 
-class SearchBar extends Component {
-  state = {
-    movie: "",
-    redirect: false,
-  };
+import React, { useState } from "react";
 
-  searchBarMovie = async (movie) => {
+const SearchBar = ({ resultMovies }) => {
+  let history = useHistory();
+
+  const [movie, setMovie] = useState("");
+  const searchBarMovie = async (movie) => {
     await axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&query=${movie}&page=1`
-      )
-      .then((res) => {
-        this.props.resultMovies(res.data);
-        this.setState({ redirect: true, searchBarMovie: "", movie: "" });
-      });
+      .all([
+        await axios.get(
+          `https://api.themoviedb.org/3/search/movie?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&query=${movie}&page=1&include_adult=false`
+        ),
+        await axios.get(
+          `https://api.themoviedb.org/3/search/movie?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&query=${movie}&page=2&include_adult=false`
+        ),
+        await axios.get(
+          `https://api.themoviedb.org/3/search/movie?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&query=${movie}&page=3&include_adult=false`
+        ),
+        await axios.get(
+          `https://api.themoviedb.org/3/search/movie?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&query=${movie}&page=4&include_adult=false`
+        ),
+      ])
+
+      .then(
+        axios.spread((page1, page2, page3, page4) => {
+          const total = [page1.data, page2.data, page3.data, page4.data];
+          resultMovies(total);
+          setMovie("");
+          history.push("/result");
+        })
+      );
   };
 
-  handleChange = (event) => {
-    this.setState({
-      movie: event.target.value,
-    });
+  const handleChange = (event) => {
+    setMovie(event.target.value);
   };
 
-  handleKeyUp = (event) => {
+  const handleKeyUp = (event) => {
     if (event.key === "Enter") {
-      this.searchBarMovie(this.state.movie);
+      searchBarMovie(movie);
     }
   };
 
-  handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    this.searchBarMovie(this.state.movie);
+    searchBarMovie(movie);
   };
 
-  render() {
-    if (this.state.redirect) {
-      return <Redirect to="/result" />;
-    }
-    return Auth.authentificated ? (
-      <>
-        <h3>Hello John</h3>
-        <h4>Recherche rapide</h4>
-        <div className="searchbar">
-          <input
-            className="searchbar-input"
-            type="text"
-            placeholder="Rechercher un Film"
-            value={this.state.movie}
-            onChange={this.handleChange}
-            onKeyUp={this.handleKeyUp}
+  return Auth.authentificated ? (
+    <>
+      <div className="searchbar">
+        <input
+          className="searchbar-input"
+          type="text"
+          placeholder="Rechercher un Film"
+          value={movie}
+          onChange={handleChange}
+          onKeyUp={handleKeyUp}
+        />
+        <div className="searchbar-submit">
+          <FontAwesome
+            className="search-icon"
+            onClick={handleSubmit}
+            name="search"
           />
-          <div className="searchbar-submit">
-            <FontAwesome
-              className="search-icon"
-              onClick={this.handleSubmit}
-              name="search"
-            />
-          </div>
         </div>
-      </>
-    ) : (
-      <div className="app">
-        <HeaderImg />
       </div>
-    );
-  }
-}
+    </>
+  ) : null;
+};
 
 export { SearchBar };

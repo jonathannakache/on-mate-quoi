@@ -66,10 +66,16 @@ h4 {
   text-align: center;
 }
 .back-btn:hover {
-  background-color: #a44d4c
+  background-color: #a44d4c;
 }
 /* SPINNER */
 
+.loading{
+  padding-top: 4rem;
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+}
 .loader {
   width: 55px;
   height: 55px;

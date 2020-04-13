@@ -1,3 +1,4 @@
+export * from "./Home/Home";
 export * from "./LoginForm/LoginForm";
 export * from "./NoteFound/NoteFound";
 export * from "./MovieId/MovieId";
@@ -9,3 +10,4 @@ export * from "./SearchMovie/SearchMovie";
 export * from "./Popular/Popular";
 export * from "./TopRated/TopRated";
 export * from "./NewMovies/NewMovies";
+export * from "./Upcoming/Upcoming"
