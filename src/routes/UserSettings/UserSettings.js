@@ -79,7 +79,14 @@ class UserSettings extends Component {
     return this.state.isReady ? (
       <div>
         <div className="back-btn">
-          <Link to="/account" style={{ color: "inherit", listStyle: "none" }}>
+          <Link
+            to="/account"
+            style={{
+              color: "inherit",
+              listStyle: "none",
+              textDecoration: "none",
+            }}
+          >
             Retour
           </Link>
         </div>
@@ -131,11 +138,18 @@ class UserSettings extends Component {
     ) : (
       <div>
         <div className="back-btn">
-          <Link to="/account" style={{ color: "inherit", listStyle: "none" }}>
+          <Link
+            to="/account"
+            style={{
+              color: "inherit",
+              listStyle: "none",
+              textDecoration: "none",
+            }}
+          >
             Retour
           </Link>
         </div>
-        <h1 style={{ textAlign: "center" }}>LOADING</h1>
+        <h1 style={{ textAlign: "center", fontSize: "2rem" }}>LOADING</h1>
         <div className="loader"></div>
       </div>
     );

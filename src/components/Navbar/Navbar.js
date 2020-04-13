@@ -51,7 +51,7 @@ const Navbar = ({ badge, logout }) => {
                 textDecoration: "none",
               }}
             >
-              <i class="far fa-calendar-plus"></i> Nouveautés
+              <i class="far fa-calendar-plus"></i> Dernières sorties
             </NavLink>
           </div>
           <div className="navbar-link">

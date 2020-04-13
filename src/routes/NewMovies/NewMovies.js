@@ -43,10 +43,10 @@ class NewMovies extends Component {
   };
 
   render() {
-    const { isReady, resultMovies } = this.state;
+    const { isReady } = this.state;
     return isReady ? (
       <div>
-        <h2>LES NOUVEAUTÉS</h2>
+        <h2>LES DERNIERS FILMS SORTIS</h2>
         <Container>
           <Grid columns={4} stackable>
             <Grid.Row>{this.renderMovies()}</Grid.Row>
@@ -55,7 +55,7 @@ class NewMovies extends Component {
       </div>
     ) : (
       <div>
-        <h4 style={{ textAlign: "center" }}>LOADING</h4>
+        <h4 style={{ textAlign: "center", fontSize: "2rem" }}>LOADING</h4>
         <div className="loader"></div>
       </div>
     );

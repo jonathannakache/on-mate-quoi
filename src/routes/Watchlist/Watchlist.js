@@ -102,15 +102,37 @@ class Watchlist extends Component {
     if (noMovie) {
       return (
         <div>
-          <Link to="/account">Retour</Link>
-          <h1 style={{ textAlign: "center" }}>AUCUN FILM</h1>
+          <div className="back-btn">
+            <Link
+              to="/account"
+              style={{
+                color: "inherit",
+                listStyle: "none",
+                textDecoration: "none",
+              }}
+            >
+              Retour
+            </Link>
+          </div>
+          <div className="container">
+            <h2 style={{ textAlign: "center" }}>
+              IL N'Y A PAS DE FILM DANS TA WATCH LIST
+            </h2>
+          </div>
         </div>
       );
     }
     return isReady ? (
       <div>
         <div className="back-btn">
-          <Link to="/account" style={{ color: "inherit", listStyle: "none" }}>
+          <Link
+            to="/account"
+            style={{
+              color: "inherit",
+              listStyle: "none",
+              textDecoration: "none",
+            }}
+          >
             Retour
           </Link>
         </div>
@@ -119,7 +141,7 @@ class Watchlist extends Component {
             <h4>MA WATCHLIST</h4>
             <span>Il te reste</span>{" "}
             <span className="color">{`${this.props.watchlistLength}`}</span>
-            <span> films a voir </span>{" "}
+            <span> films à voir </span>{" "}
           </div>
         </div>
         <Container>
@@ -131,11 +153,18 @@ class Watchlist extends Component {
     ) : (
       <div>
         <div className="back-btn">
-          <Link to="/account" style={{ color: "inherit", listStyle: "none" }}>
+          <Link
+            to="/account"
+            style={{
+              color: "inherit",
+              listStyle: "none",
+              textDecoration: "none",
+            }}
+          >
             Retour
           </Link>
         </div>
-        <h4 style={{ textAlign: "center" }}>LOADING</h4>
+        <h4 style={{ textAlign: "center", fontSize: "2rem" }}>LOADING</h4>
         <div className="loader"></div>
       </div>
     );

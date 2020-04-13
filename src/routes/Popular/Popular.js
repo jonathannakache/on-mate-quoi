@@ -58,7 +58,7 @@ class Popular extends Component {
       </div>
     ) : (
       <div>
-        <h4 style={{ textAlign: "center" }}>LOADING</h4>
+        <h4 style={{ textAlign: "center", fontSize: "2rem" }}>LOADING</h4>
         <div className="loader"></div>
       </div>
     );
