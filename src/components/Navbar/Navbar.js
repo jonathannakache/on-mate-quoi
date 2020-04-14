@@ -4,7 +4,7 @@ import "./Navbar.css";
 import { NavLink, useHistory } from "react-router-dom";
 import { isAuth as Auth } from "../../utils/isAuth";
 
-const Navbar = ({ badge, logout }) => {
+const Navbar = ({ logout }) => {
   let history = useHistory();
 
   function disconnect() {
@@ -51,21 +51,10 @@ const Navbar = ({ badge, logout }) => {
                 textDecoration: "none",
               }}
             >
-              <i class="far fa-calendar-plus"></i> Dernières sorties
+              <i class="fas fa-calendar-check"></i> Dernières sorties
             </NavLink>
           </div>
-          <div className="navbar-link">
-            <NavLink
-              to="/top-rated"
-              style={{
-                color: "inherit",
-                listStyle: "none",
-                textDecoration: "none",
-              }}
-            >
-              <i class="fas fa-star"></i> Les mieux notés
-            </NavLink>
-          </div>
+
           <div className="navbar-link">
             <NavLink
               to="/upcoming"
@@ -75,7 +64,7 @@ const Navbar = ({ badge, logout }) => {
                 textDecoration: "none",
               }}
             >
-              <i class="fas fa-star"></i> Prochaines sorties
+              <i class="far fa-clock"></i> Prochaines sorties
             </NavLink>
           </div>
 
@@ -88,9 +77,10 @@ const Navbar = ({ badge, logout }) => {
                 textDecoration: "none",
               }}
             >
-              <i class="fas fa-sort-amount-up"></i> Films du moment
+              <i class="fas fa-star"></i> Les mieux notés
             </NavLink>
           </div>
+
         </div>
         <div>
           <h3>Tableau de bord</h3>

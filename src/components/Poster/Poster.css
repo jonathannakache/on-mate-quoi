@@ -1,7 +1,12 @@
 h6 {
   color: white;
-  padding: 2rem 0;
-  font-size: 1.5rem !important;
+  padding-top: 1.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.6rem !important;
+}
+.categories {
+  font-size: 1.1rem;
+  color: #dad8d8;
 }
 
 .poster-img {

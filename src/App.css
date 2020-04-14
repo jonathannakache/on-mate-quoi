@@ -35,6 +35,7 @@ body {
 }
 .main {
   padding-top: 8rem;
+  padding-bottom: 5.5rem;
   width: inherit;
   background-image: linear-gradient(
     to right,
@@ -70,7 +71,7 @@ h4 {
 }
 /* SPINNER */
 
-.loading{
+.loading {
   padding-top: 4rem;
   color: white;
   font-size: 2rem;

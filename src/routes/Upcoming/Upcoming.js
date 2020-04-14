@@ -13,16 +13,16 @@ class Upcoming extends Component {
     await axios
       .all([
         await axios.get(
-          `https://api.themoviedb.org/3/movie/upcoming?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=1`
+          `https://api.themoviedb.org/3/movie/upcoming?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=1&region=FR`
         ),
         await axios.get(
-          `https://api.themoviedb.org/3/movie/upcoming?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=2`
+          `https://api.themoviedb.org/3/movie/upcoming?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=2&region=FR`
         ),
         await axios.get(
-          `https://api.themoviedb.org/3/movie/upcoming?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=3`
+          `https://api.themoviedb.org/3/movie/upcoming?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=3&region=FR`
         ),
         await axios.get(
-          `https://api.themoviedb.org/3/movie/upcoming?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=4`
+          `https://api.themoviedb.org/3/movie/upcoming?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=4&region=FR`
         ),
       ])
 
@@ -51,6 +51,7 @@ class Upcoming extends Component {
                 langueOriginal={movie.original_language}
                 image={movie.poster_path}
                 buttonState={buttonState}
+                genre_ids={movie.genre_ids}
               />
             </Grid.Column>
           );
@@ -65,7 +66,8 @@ class Upcoming extends Component {
     const { isReady } = this.state;
     return isReady ? (
       <div>
-        <h2>LES FILMS A VENIR</h2>
+        <h2>BIENTOT AU CINEMA</h2>
+        {/* <h2>LES FILMS A VENIR</h2> */}
         <Container>
           <Grid columns={4} stackable>
             <Grid.Row>{this.renderMovies()}</Grid.Row>

@@ -1,9 +1,7 @@
-// import React from "react";
 import "./Header.css";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import FontAwesome from "react-fontawesome";
 import { isAuth as Auth } from "../../utils/isAuth";
-import axios from "axios";
 import React, { Component } from "react";
 import { SearchBar } from "../SearchBar/SearchBar";
 

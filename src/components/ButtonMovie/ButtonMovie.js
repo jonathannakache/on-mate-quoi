@@ -109,7 +109,7 @@ import React, { Component } from "react";
 import "./ButtonMovie.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import FontAwesome from "react-fontawesome";
+import { Watchlist } from "../../routes";
 
 toast.configure();
 
@@ -183,16 +183,14 @@ class ButtonMovie extends Component {
   //   this.props.buttonState(btnState);
   // };
   render() {
-    const { id } = this.props;
+    const { id, cssBtn } = this.props;
     const { isAddWatchlist } = this.state;
-
     return (
       <div
         className={
-          !isAddWatchlist ? " far fa-heart" : " fas fa-heart"
+          !isAddWatchlist ? cssBtn + " far fa-heart" : cssBtn + " fas fa-heart"
         }
         onClick={() => this.addWatchlist(id)}
-        // className="children"
       >
         {/* {!isAddWatchlist ? "Y" : "X"} */}
         {/* </div> */}

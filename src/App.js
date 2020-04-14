@@ -13,7 +13,6 @@ import {
   Account,
   SearchMovie,
   Popular,
-  TopRated,
   NewMovies,
   Upcoming,
 } from "./routes";
@@ -127,7 +126,6 @@ class App extends Component {
   };
 
   resultMovies = (total) => {
-    console.log(total);
 
     this.setState({ resultMovies: total });
   };
@@ -198,14 +196,6 @@ class App extends Component {
                     buttonState={this.buttonState}
                   />
                 </Route>
-                <Route exact path="/top-rated">
-                  <AuthService
-                    child={TopRated}
-                    logout={this.logout}
-                    movies={this.state.userData.movies}
-                    buttonState={this.buttonState}
-                  />
-                </Route>
 
                 <Route exact path="/upcoming">
                   <AuthService
@@ -232,7 +222,12 @@ class App extends Component {
                 </Route>
 
                 <Route exact path="/movie/:movie">
-                  <AuthService child={MovieId} logout={this.logout} />
+                  <AuthService
+                    child={MovieId}
+                    movies={this.state.userData.movies}
+                    buttonState={this.buttonState}
+                    logout={this.logout}
+                  />
                 </Route>
 
                 <Route exact path="/result">

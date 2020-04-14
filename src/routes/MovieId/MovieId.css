@@ -1,40 +1,104 @@
-.movie-id{
-    position: relative;
-    padding-top: 14rem;
+.movie-id {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 3rem;
+}
+.movie-id-img {
+  border-radius: 7px;
+  width: 294px;
+  height: 437px;
 }
 
-.movie-id-img{
-    border-radius: 3px;
-    width: 270px;
-    height: 400px;  
+.movie-id-description {
+  background-color: #363636;
+  margin-left: 4rem;
+  padding: 0 3rem;
+  position: relative;
+  color: #dad8d8;
+  font-weight: 600;
+  font-size: 1.2rem;
 }
-.bg{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+.movie-id-description:before {
+  right: 100%;
+  top: 30%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
 }
 
-.categories{
-    padding-right: 1rem;
-    color: grey;
+.movie-id-description:before {
+  border-right-color: #363636;
+  border-width: 45px;
+  margin-top: -45px;
 }
 
-.result{
-    color: grey;
+.movie-id-description h3 {
+  color: #fff;
+  font-size: 3rem;
+  margin: 2rem 0 !important;
+}
+.movie-id-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.movie-id-btn {
+  width: 7rem;
+  height: 6rem;
+  font-size: 4rem;
+  background-color: #c55958;
+  border-radius: 5px;
+  font-size: 4rem;
+  color: white !important;
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.movie-id-btn:hover {
+  background-color: #a44d4c;
 }
 
-.iframe-container{
-    margin-top: 4rem;
-    margin-bottom: 4rem;
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%; 
-    height: 0;
-  }
-  .iframe-container iframe{
-    position: absolute;
-    top:0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
+.movie-id-time {
+  display: flex;
+  justify-content: space-between;
+}
+
+.movie-id-border {
+  border: 1px solid #c55958;
+  width: 60%;
+  margin: 1.5rem auto;
+}
+.movie-id-actors {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+.movie-id-actors p:first-child {
+  margin-right: 1rem;
+  margin-bottom: 0 !important;
+  width: 8rem;
+}
+.categories {
+  padding-right: 1.3rem;
+}
+
+.iframe-container {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+.iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

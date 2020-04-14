@@ -155,37 +155,43 @@ class FormSearchMovie extends Component {
         onSubmit={this.handleSubmit}
       >
         <div className="form-check row">
-          <h4 className="formSearchMovieTitles">Catégories</h4>
-          {genres.map((genre) => {
-            return (
-              <input
-                className={
-                  this.state.genre.includes(genre.id.toString())
-                    ? "col-2 form-search-movie-categories-include"
-                    : "col-2 form-search-movie-categories"
-                }
-                type="button"
-                key={genre.id}
-                name={genre.id}
-                id={genre.id}
-                value={genre.name}
-                onClick={this.handleClick}
-              />
-            );
-          })}
+          <div className="form-search-movie-bg">
+            <h4 className="form-search-movie-titles">Catégories</h4>
+            {genres.map((genre) => {
+              return (
+                <input
+                  className={
+                    this.state.genre.includes(genre.id.toString())
+                      ? "col-2 form-search-movie-categories-include"
+                      : "col-2 form-search-movie-categories"
+                  }
+                  type="button"
+                  key={genre.id}
+                  name={genre.id}
+                  id={genre.id}
+                  value={genre.name}
+                  onClick={this.handleClick}
+                />
+              );
+            })}
+          </div>
         </div>
         <div className="form-search-movie-bg">
-          <h4 className="formSearchMovieTitles">Acteur</h4>
-          <input
-            className="formSearchMovieInput"
-            type="text"
-            placeholder="..."
-            name="acteur"
-            id="acteur"
-            autocomplete="off"
-            onChange={this.handleChangePeople}
-            value={this.state.acteur}
-          />
+          <div className="form-search-movie-input">
+            <h4 className="form-search-movie-titles">Acteur :</h4>
+            <div className="form-input-and-icon">
+              <input
+                type="text"
+                name="acteur"
+                id="acteur"
+                autocomplete="off"
+                onChange={this.handleChangePeople}
+                value={this.state.acteur}
+              />
+              <div className="form-search-movie-icon fa fa-search"></div>
+            </div>
+          </div>
+
           {this.state.resultsPeople
             .map((people) => {
               return (
@@ -206,20 +212,23 @@ class FormSearchMovie extends Component {
             .slice(0, 7)}
         </div>
         <div className="form-search-movie-bg">
-          <h4 className="formSearchMovieTitles">Année du film</h4>
-          <input
-            placeholder="..."
-            name="year"
-            className="formSearchMovieInput"
-            id="year"
-            onChange={this.handleChange}
-            value={this.state.year}
-          />
+          <div className="form-search-movie-input">
+            <h4 className="form-search-movie-titles">Année du film :</h4>
+            <div className="form-input-and-icon">
+              <input
+                name="year"
+                id="year"
+                onChange={this.handleChange}
+                value={this.state.year}
+              />
+              <div className="form-search-movie-icon fa fa-search"></div>
+            </div>
+          </div>
         </div>
 
         <button
           type="submit"
-          className="formSearchMovieSubmit"
+          className="form-search-movie-submit"
           onSubmit={this.handleSubmit}
         >
           Chercher

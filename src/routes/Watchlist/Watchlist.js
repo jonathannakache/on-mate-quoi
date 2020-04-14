@@ -62,7 +62,12 @@ class Watchlist extends Component {
   };
 
   renderMovies = () => {
+    let genre_ids = [];
     const renderMovies = arrData.map((movie) => {
+      const a = movie.genres.forEach((element) => {
+        genre_ids.push(element.id);
+      });
+
       return (
         <Grid.Column key={movie.id}>
           <Poster
@@ -74,6 +79,7 @@ class Watchlist extends Component {
             langueOriginal={movie.original_language}
             image={movie.poster_path}
             buttonState={this.props.buttonState}
+            genre_ids={genre_ids}
           />
         </Grid.Column>
       );

@@ -21,6 +21,7 @@ class PosterList extends Component {
                 langueOriginal={movie.original_language}
                 image={movie.poster_path}
                 buttonState={buttonState}
+                genre_ids={movie.genre_ids}
               />
             </Grid.Column>
           );

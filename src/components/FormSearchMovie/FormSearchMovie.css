@@ -7,8 +7,8 @@
 .form-search-movie-bg {
   background-color: #363636;
   text-align: center;
-  padding: 2rem;
-  margin: 4rem 6rem;
+  padding: 1rem;
+  margin: 1.4rem 6rem;
   border-radius: 20px;
 }
 .form-search-movie-categories {
@@ -23,35 +23,60 @@
 }
 
 .form-search-movie-categories:hover,
-.formSearchMovieSubmit:hover {
+.form-search-movie-submit:hover {
   background-color: #a44d4c;
 }
 .form-search-movie-categories-include {
   background-color: #363636;
   padding: 8px;
   margin: 8px;
-  color: #FFF;
+  color: #fff;
   font-weight: bold;
   outline: none;
   border: 1.7px solid #c55958;
   border-radius: 20px;
 }
-.formSearchMovieInput {
+.form-search-movie-input {
+  display: flex;
+  align-items: center;
+}
+.form-search-movie-input h4 {
+  display: flex;
+  align-items: center;
+  margin: 0 !important;
+  width: 40%;
+}
+.form-input-and-icon {
+  position: relative;
+  width: 100%;
+}
+.form-input-and-icon input {
   text-align: center;
-  width: 50%;
-  font-size: 3rem;
-  background: none;
+  width: 100%;
+  font-size: 2.3rem;
+  background-color: #303030;
   border: 1px solid #fff;
   border-radius: 20px;
   color: #c55958;
   outline: none;
   margin: auto;
 }
+.form-input-and-icon input:hover {
+  background-color: #434242;
+}
 
-.formSearchMovieInput::placeholder {
+.form-input-and-icon input::placeholder {
   color: #c55958;
 }
-.formSearchMovieSubmit {
+.form-search-movie-icon {
+  position: absolute;
+  top: 13px;
+  left: 25px;
+  width: 16px;
+  color: #fff;
+  font-size: 1.9rem;
+}
+.form-search-movie-submit {
   width: 40%;
   font-weight: 600;
   font-size: 1.2rem;
@@ -61,11 +86,10 @@
   background-color: #c55958;
   border-radius: 20px;
 }
-
-.formSearchMovieTitles {
+.form-search-movie-titles {
   margin: 1.5rem auto;
   font-weight: bold;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
 }
 
 .peoples {

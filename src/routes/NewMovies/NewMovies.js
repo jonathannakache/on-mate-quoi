@@ -8,42 +8,20 @@ class NewMovies extends Component {
     isReady: false,
     resultMovies: {},
   };
-  // await axios
-  //     .all([
-  //       await axios.get(
-  //         `https://api.themoviedb.org/3/movie/now_playing?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=1`
-  //       ),
-  //       await axios.get(
-  //         `https://api.themoviedb.org/3/movie/now_playing?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=1`
-  //       ),
-  //       await axios.get(
-  //         `https://api.themoviedb.org/3/movie/now_playing?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=1`
-  //       ),
-  //       await axios.get(
-  //         `https://api.themoviedb.org/3/movie/now_playing?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=1`
-  //       ),
-  //     ])
-
-  //     .then(
-  //       axios.spread((page1, page2, page3, page4) => {
-  //         const allPages = [page1.data, page2.data, page3.data, page4.data];
-  //       this.setState({ resultMovies: allPages, isReady: true });
-  //       })
-  //     );
   async componentDidMount() {
     await axios
       .all([
         await axios.get(
-          `https://api.themoviedb.org/3/movie/now_playing?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=1`
+          `https://api.themoviedb.org/3/movie/now_playing?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=1&region=FR`
         ),
         await axios.get(
-          `https://api.themoviedb.org/3/movie/now_playing?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=2`
+          `https://api.themoviedb.org/3/movie/now_playing?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=2&region=FR`
         ),
         await axios.get(
-          `https://api.themoviedb.org/3/movie/now_playing?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=3`
+          `https://api.themoviedb.org/3/movie/now_playing?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=3&region=FR`
         ),
         await axios.get(
-          `https://api.themoviedb.org/3/movie/now_playing?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=4`
+          `https://api.themoviedb.org/3/movie/now_playing?api_key=9356fe45f1a3414d6abef47c00824a9e&language=fr-FR&page=4&region=FR`
         ),
       ])
 
@@ -72,6 +50,7 @@ class NewMovies extends Component {
                 langueOriginal={movie.original_language}
                 image={movie.poster_path}
                 buttonState={buttonState}
+                genre_ids={movie.genre_ids}
               />
             </Grid.Column>
           );

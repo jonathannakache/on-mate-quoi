@@ -63,7 +63,7 @@ const SearchBar = ({ resultMovies }) => {
           onChange={handleChange}
           onKeyUp={handleKeyUp}
         />
-        <div className="searchbar-submit">
+        <div>
           <FontAwesome
             className="search-icon"
             onClick={handleSubmit}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./MovieId.css";
 import axios from "axios";
+import ButtonMovie from "../../components/ButtonMovie/ButtonMovie";
 
 class MovieId extends Component {
   state = {
@@ -52,9 +53,9 @@ class MovieId extends Component {
     )[0].name;
 
     return (
-      <div className=" container">
-        <div className="row">
-          <div className="col-3">
+      <div className="container">
+        <div className="movie-id">
+          <div>
             <figure>
               <img
                 draggable="false"
@@ -64,38 +65,52 @@ class MovieId extends Component {
               />
             </figure>
           </div>
-          <div className="col-9">
-            <h3>{resultMovies.title}</h3>
-            <p>Realisateur :</p>
-            <p className="result">{director}</p>
-            <p>Durée</p>
-            <p className="result">{time_convert(resultMovies.runtime)}</p>
-            <p>Acteurs :</p>
-            <p className="categories">
-              {getCredit.cast
-                .map((acteur) => (
-                  <span className="categories">{acteur.name}</span>
-                ))
-                .slice(0, 7)}
-            </p>
-            <p>
-              {resultMovies.genres.length > 1 ? "Categories :" : "Categorie :"}
-            </p>
-            <p>
-              {resultMovies.genres.map((element) => (
-                <span className="categories">{element.name}</span>
-              ))}
-            </p>
-            <p>Synopsis :</p>
-            <p className="result">{resultMovies.overview}</p>
+          <div className="movie-id-description">
+            <div>
+              <div className="movie-id-header">
+                <h3>{resultMovies.title}</h3>
+                <ButtonMovie
+                  cssBtn="movie-id-btn"
+                  style={{ padding: "3rem" }}
+                  movies={this.props.movies}
+                  id={this.state.id}
+                  buttonState={this.props.buttonState}
+                />
+              </div>
+              <div className="movie-id-time">
+                <p>{resultMovies.release_date.slice(0, 4)}</p>
+                <p>{director}</p>
+                <p>{time_convert(resultMovies.runtime)}</p>
+              </div>
+              <div className="movie-id-border"></div>
+              <div className="movie-id-synopsis">
+                <p>{resultMovies.overview}</p>
+              </div>
+              <div className="movie-id-border"></div>
+              <div className="movie-id-actors">
+                <p>Acteurs :</p>
+                <p className="categories">
+                  {getCredit.cast
+                    .map((acteur) => (
+                      <span className="categories">{acteur.name}</span>
+                    ))
+                    .slice(0, 7)}
+                </p>
+              </div>
+              <div className="movie-id-actors">
+                <p>
+                  {resultMovies.genres.length > 1
+                    ? "Categories :"
+                    : "Categorie :"}
+                </p>
+                <p>
+                  {resultMovies.genres.map((element) => (
+                    <span className="categories">{element.name}</span>
+                  ))}
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-3"></div>
-          <div className="add-to-watchlist col-6">
-            <a href="#">Ajouter a ma Watchlist</a>
-          </div>
-          <div className="col-3"></div>
         </div>
 
         {getVideo.results.length > 0 ? (
