@@ -41,7 +41,26 @@
 .user-settings-form input::placeholder {
   text-align: center;
 }
+.user-settings-btns {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
 .user-settings-form button {
+  margin-top: 2rem;
+  margin-right: 4rem;
+  padding: 1.2rem;
+  background-color: #c55958;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  /* width: 23rem; */
+}
+.user-settings-form button:hover {
+  background-color: green;
+}
+.btn-delete {
   margin-top: 2rem;
   padding: 1.2rem;
   background-color: #c55958;
@@ -49,6 +68,6 @@
   font-weight: bold;
   color: white;
 }
-.user-settings-form button:hover{
-    background-color: #a44d4c;
+.btn-delete:hover {
+  background-color: red;
 }

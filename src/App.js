@@ -126,7 +126,6 @@ class App extends Component {
   };
 
   resultMovies = (total) => {
-
     this.setState({ resultMovies: total });
   };
 

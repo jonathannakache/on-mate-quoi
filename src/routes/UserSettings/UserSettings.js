@@ -33,6 +33,34 @@ class UserSettings extends Component {
       });
   }
 
+  deleteAccount = async () => {
+    const email = { email: this.state.newUser.email };
+    await fetch("/api/delete-account", {
+      method: "POST",
+      body: JSON.stringify(email),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        this.userDeleted();
+        this.props.logout();
+        this.setState({ redirect: true });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  userDeleted = () => {
+    toast.success(`Le compte a bien été supprimé`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
   userIsReplaced = () => {
     toast.success(`Les informations on étaient mise a jour 😉`, {
       position: "top-right",
@@ -72,7 +100,7 @@ class UserSettings extends Component {
     }));
   };
   render() {
-    const { userData, redirect } = this.state;
+    const { userData, redirect, newUser } = this.state;
     if (redirect) {
       return <Redirect to="/login" />;
     }
@@ -103,7 +131,7 @@ class UserSettings extends Component {
                 name="firstname"
                 id="firstname"
                 onChange={this.handleChange}
-                value={this.state.newUser.firstname}
+                value={newUser.firstname}
                 autoComplete="off"
               />
             </div>
@@ -115,7 +143,7 @@ class UserSettings extends Component {
                 name="lastname"
                 id="lastname"
                 onChange={this.handleChange}
-                value={this.state.newUser.lastname}
+                value={newUser.lastname}
                 autoComplete="off"
               />
             </div>
@@ -127,11 +155,16 @@ class UserSettings extends Component {
                 name="email"
                 id="email"
                 onChange={this.handleChange}
-                value={this.state.newUser.email}
+                value={newUser.email}
                 autoComplete="off"
               />
             </div>
-            <button type="submit">SAUVEGARDER</button>
+            <div className="user-settings-btns">
+              <button type="submit">METTRE A JOUR LES INFORMATIONS</button>
+              <div className="btn-delete" onClick={this.deleteAccount}>
+                SUPPRIMER MON COMPTE
+              </div>
+            </div>
           </form>
         </div>
       </div>

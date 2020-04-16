@@ -8,6 +8,5 @@ export * from "./UserSettings/UserSettings";
 export * from "./Account/Account";
 export * from "./SearchMovie/SearchMovie";
 export * from "./Popular/Popular";
-export * from "./TopRated/TopRated";
 export * from "./NewMovies/NewMovies";
 export * from "./Upcoming/Upcoming"
