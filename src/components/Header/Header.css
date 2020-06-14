@@ -21,10 +21,10 @@
 }
 
 .title {
-  display: flex;
-  align-items: center;
-  width: 15rem;
+  width: 20rem !important;
   height: 100%;
+  padding: 0 15px;
+  max-width: 100%;
   background-color: #c55959;
   text-align: center;
 }

@@ -19,8 +19,6 @@ body {
   width: 100%;
 }
 .App {
-  display: flex;
-  flex-direction: row;
   width: 100%;
 }
 .content {
@@ -30,13 +28,11 @@ body {
   display: flex;
   flex-direction: row;
 }
-.navbar-width {
-  width: 16.8rem;
-}
 .main {
   padding-top: 8rem;
+  min-height: calc(100vh - 60px);
   padding-bottom: 5.5rem;
-  width: inherit;
+  flex-grow: 1;
   background-image: linear-gradient(
     to right,
     #303030,
